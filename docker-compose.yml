@@ -9,6 +9,18 @@ services:
     restart: always
     networks:
       - app_network
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - app_network
 
   publisher:
     build:
