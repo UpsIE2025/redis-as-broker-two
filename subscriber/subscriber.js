@@ -1,5 +1,5 @@
 const Redis = require("ioredis");
-const redis = new Redis("redis://192.10.10.1:6379");
+const redis = new Redis(process.env.REDIS_URL);
 
 const channel = "notificaciones";
 

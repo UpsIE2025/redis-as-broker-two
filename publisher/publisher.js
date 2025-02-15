@@ -1,5 +1,5 @@
 const Redis = require('ioredis');
-const redis = new Redis("redis://localhost:6379");  // Usar la URL de Redis desde las variables de entorno
+const redis = new Redis(process.env.REDIS_URL);
 
 const channel = 'my_channel';
 
