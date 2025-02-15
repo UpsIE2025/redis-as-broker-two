@@ -1,16 +1,16 @@
-const Redis = require("ioredis");
-const redis = new Redis(process.env.REDIS_URL);
+require("dotenv").config();
+const { createClient } = require("redis");
 
-const channel = "notificaciones";
+const redisClient = createClient({ url: process.env.REDIS_URL });
 
-redis.subscribe(channel, (err, count) => {
-    if (err) {
-        console.error("Error en la suscripción:", err);
-    } else {
-        console.log(`📡 Suscrito al canal "${channel}"`);
-    }
-});
+redisClient.connect()
+  .then(() => console.log("📥 Suscriptor conectado a Redis"))
+  .catch(err => console.error("Error en Redis:", err));
 
-redis.on("message", (channel, message) => {
-    console.log(`📥 Recibido en ${channel}: ${message}`);
-});
+async function subscribe() {
+  await redisClient.subscribe("test-channel", (message) => {
+    console.log(`📩 Mensaje recibido: ${message}`);
+  });
+}
+
+subscribe();
